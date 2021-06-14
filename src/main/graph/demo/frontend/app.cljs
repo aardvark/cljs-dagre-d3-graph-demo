@@ -50,6 +50,26 @@
 
         render (.render dagreD3)
 
+        _ (let [render (.render dagreD3)]
+            (set! (.-house (.shapes render))
+                  (fn [parent bbox node]
+                    (let [w (.-width bbox)
+                          h (.-height bbox)
+                          points [{:x 0 :y 0}
+                                  {:x w :y 0}
+                                  {:x w :y (- h)}
+                                  {:x (/ w 2) :y (* (/ 3 2) (- h))}
+                                  {:x 0 :y (- h)}]
+                          points-str (for [x points] (clojure.string/join "," (vals x)))
+                          points-str (clojure.string/join " " points-str)
+                          shapeSvg (-> (.insert parent "polygon" ":first-child")
+                                       (.attr "points" points-str)
+                                       (.attr "transform" (str "translate(" (/ (- w) 2) "," (* h (/ 3 4)) ")")))]
+                      (set! (.-intersect node)
+                            (fn [point]
+                              (.polygon (.-intersect dagreD3) node (clj->js points) point)))
+                      shapeSvg))))
+
         svg (.select d3 (str "#" el-id))]
 
     (.call svg render g)
@@ -74,7 +94,7 @@
   (println "Hello updated World")
 
   (rum/mount [(div-svg "graph")
-              (div-svg "other-graph")]
+              (div-svg "custom-shape")]
              (.getElementById js/document "root"))
 
   (add-graph {:nodes [["A" {:label "A start"}] ["B"] ["C"] ["D"]]
@@ -83,8 +103,9 @@
                       ["A" "C" {:label "A to C"}]
                       ["A" "D"]]}
              "graph")
-  (add-graph {:nodes [["A"] ["B"] ["C"]]
-              :edges [["A" "B"]]}
-             "other-graph")
+  (add-graph {:nodes [["house" {:shape "house"}]
+                      ["rect" {:shape "rect"}]]
+              :edges [["house" "rect"]]}
+             "custom-shape")
   
   )
