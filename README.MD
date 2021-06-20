@@ -8,10 +8,10 @@ I am not sure how to work around them.
 ## Run
 
 ```bash
-npx shadow-cljs watch frontend
+npx shadow-cljs watch :devcards
 ```
 
-This will run a devserver on localhost:8080.
+This will run a devcards servers over localhost:3001
 
 ## LICENSE
 
