@@ -5,9 +5,27 @@
   "src/test"]
 
  :dependencies
- [[rum "0.12.6"]]
- :dev-http {8080 "public"}
+ [[rum "0.12.6"]
+  [reagent "1.1.0"]
+  [devcards "0.2.7"]]
+
+ :dev-http {3000 "public"
+            3001 ["out/devcards" "public"]}
  :builds
  {:frontend
   {:target :browser
-   :modules {:main {:init-fn graph.demo.frontend.app/init}}}}}
+   :output-dir "public/js"
+   :asset-path "js"
+   :modules {:main {:init-fn graph.demo.frontend.app/init}}}
+  :devcards
+  {:target :browser-test
+   :ns-regexp "-cards$"
+   :test-dir "out/devcards"
+   :runner-ns graph.demo.frontend.devcards
+   :compiler-options {:devcards true
+                      :output-feature-set :es8}
+   :js-options {:resolve 
+                {"devcards-marked"
+                 {:target :npm :require "marked"}
+                 "devcards-syntax-highlighter"
+                 {:target :npm :require "highlight.js"}}}}}}
