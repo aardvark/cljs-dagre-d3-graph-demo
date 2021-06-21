@@ -6,13 +6,11 @@
    [devcards.core :as dc]))
 
 (dc/defcard-doc
-  "# Markdown
-   d3-dagre graph examples")
+  "# d3-dagre graph examples")
 
 (declare graph-ab)
-
-(comment)
 (dc/defcard-rg graph-ab
+  "A -> B graph"
   (fn [data-atom _]
     [d3-in-reagent/wrap-in-reagent
      data-atom
@@ -20,6 +18,29 @@
       :mount graph/graph-did-mount
       :update graph/graph-did-update}])
   (atom {:div-id "ab"
-         :graph-def {:nodes [["A"] ["B"] ["C"]]
+         :graph-def {:nodes [["A"] ["B"]]
+                     :edges [["A" "B"]]}})
+  {:inspect-data true :history true})
+
+(declare interactive-nodes)
+
+(dc/defcard-rg interactive-nodes
+  "Nodes can be added and removed interactively"
+  (fn [data-atom _]
+    [:div#wrapper
+     [:button {:onClick 
+               (fn [] (swap! data-atom
+                             update-in
+                             [:graph-def :nodes]
+                             (fn [oldv args]
+                               (conj oldv ["C"]))))}
+      "Add Node"]
+     [d3-in-reagent/wrap-in-reagent
+      data-atom
+      {:render graph/graph-render-r
+       :mount graph/graph-did-mount
+       :update graph/graph-did-update}]])
+  (reagent.core/atom {:div-id "interactive"
+         :graph-def {:nodes [["A"] ["B"]]
                      :edges [["A" "B"]]}})
   {:inspect-data true :history true})

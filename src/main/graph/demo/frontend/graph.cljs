@@ -89,8 +89,7 @@
 (defn graph-enter
   [div-id]
   (-> (.select d3 (str "#" div-id))
-      (.append "svg")
-      (.append "g")))
+      (.append "svg")))
 
 (defn graph-enter-r
   [atom]
@@ -127,8 +126,7 @@
 (defn dagre-graph-did-update 
   [atom]
   (dagre-graph-enter (:graph-def @atom) (:div-id @atom))
-  (dagre-graph-update (:graph-def @atom) (:div-id @atom))
-  (dagre-graph-exit (:div-id @atom)))
+  (dagre-graph-update (:graph-def @atom) (:div-id @atom)))
 
 
 (defn dagre-graph-did-mount
@@ -140,6 +138,7 @@
   [atom]
   (graph-enter-r atom)
   (dagre-graph-did-mount atom))
+
 
 (defn graph-did-update 
   [atom]

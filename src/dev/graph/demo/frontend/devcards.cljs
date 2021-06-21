@@ -11,4 +11,5 @@
 (js/goog.exportSymbol "DevcardsMarked" marked)
 
 (defn ^:export init []
+  (enable-console-print!)
   (dc/start-devcard-ui!))
