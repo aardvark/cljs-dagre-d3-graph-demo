@@ -5,8 +5,7 @@
   "src/test"]
 
  :dependencies
- [[rum "0.12.6"]
-  [reagent "1.1.0"]
+ [[reagent "1.1.0"]
   [devcards "0.2.7"]]
 
  :dev-http {3000 "public"

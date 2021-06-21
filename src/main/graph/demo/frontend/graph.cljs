@@ -1,6 +1,5 @@
 (ns graph.demo.frontend.graph
   (:require [clojure.string :as string]
-            [rum.core :as rum]
             ["d3" :as d3]
             ["dagre-d3" :as dagreD3]))
 
@@ -143,48 +142,3 @@
 (defn graph-did-update 
   [atom]
   (dagre-graph-did-update atom))
-
-
-
-(rum/defc div-svg
-  [id]
-  [:div
-   [:p (str "Graph with id: " id)]
-   [:svg {:id id :width 320 :height 400}]])
-
-
-(rum/defc div-svg-text-area
-  [id state-atom]
-  [:div
-   [:p (str "Graph with id: " @id)]
-   [:textarea {:rows 4 :cols 50
-               :value @state-atom
-               :on-change (fn [e]
-                            (let [nval (.. e -target -value)]
-                              (js/alert nval)
-                              (set! (.-value (.-target e)) nval)
-                              (reset! state-atom nval)
-                              e))}]
-   [:svg {:id @id :width 320 :height 400}]])
-
-(comment
-  (defn ^:dev/after-load init []
-    (println "Hello updated World")
-
-    (let [state (atom "ABC")]
-
-      (rum/mount [(div-svg "graph")
-                  (div-svg "custom-shape")
-                  (div-svg-text-area state state)]
-                 (.getElementById js/document "root")))
-
-    (add-graph {:nodes [["A" {:label "A start"}] ["B"] ["C"] ["D"]]
-                :edges [["A" "A" {:label "Self"}]
-                        ["A" "B" {:label "A to B"}]
-                        ["A" "C" {:label "A to C"}]
-                        ["A" "D"]]}
-               "graph")
-    (add-graph {:nodes [["house" {:shape "house"}]
-                        ["rect" {:shape "rect"}]]
-                :edges [["house" "rect"]]}
-               "custom-shape")))
