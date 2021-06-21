@@ -20,9 +20,11 @@
   {:target :browser-test
    :ns-regexp "-cards$"
    :test-dir "out/devcards"
+   :output-dir "release"
    :runner-ns graph.demo.frontend.devcards
    :compiler-options {:devcards true
-                      :output-feature-set :es8}
+                      :output-feature-set :es8
+                      :optimizations :advanced}
    :js-options {:resolve 
                 {"devcards-marked"
                  {:target :npm :require "marked"}
