@@ -17,6 +17,13 @@ npx shadow-cljs watch :devcards
 
 This will run a devcards servers over localhost:3001
 
+## Release docs
+
+```bash
+npx shadow-cljs release devcards
+cp out/devcards/js/test.js docs/js/test.js
+```
+
 ## LICENSE
 
 Licensed under MIT
