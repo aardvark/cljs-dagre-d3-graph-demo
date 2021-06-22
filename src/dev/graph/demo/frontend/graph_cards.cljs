@@ -35,6 +35,20 @@
                                   :edges [["A" "B"]]}})
   {:inspect-data true :history true})
 
+(declare custom-style-graph)
+(dc/defcard-rg custom-style-graph
+  "Styles passed in properties are applied to graph"
+
+  (fn [data-atom _]
+    [graph-rg/graph data-atom])
+
+  (reagent.core/atom {:div-id "custom-style-graph"
+                      :graph-def {:nodes [["A" {:label "a"}] ["B" {:style "fill: #afa"}]]
+                                  :edges [["A" "B" {:style "stroke: #f66; stroke-width: 3px; stroke-dasharray: 5, 5;"
+                                                    :arrowheadStyle "fill: #f66"}]]}})
+  {:inspect-data true :history true})
+
+
 
 (declare interactive-nodes)
 (dc/defcard-rg interactive-nodes
@@ -68,3 +82,5 @@
                                   :edges [["A" "B"] ["A" "C"] ["B" "C"] 
                                           ["B" "D"] ["C" "E"] ["D" "E"]]}})
   {:inspect-data true :history true})
+
+

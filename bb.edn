@@ -1,0 +1,15 @@
+{:tasks 
+ {:requires ([babashka.fs :as fs])
+  dir (shell "cmd /c dir")
+  clean-docs (do (println "Removing docs test.js.")
+                 (fs/delete-if-exists "docs/js/test.js"))
+  release (shell "cmd /c shadow-cljs release devcards")
+  copy-js-to-docs (do (println "Copy released test.js to docs")
+                      (fs/copy "out/devcards/js/test.js" "docs/js/test.js"))
+
+  release-docs (do 
+                   (run 'release)
+                   (run 'clean-docs)
+                   (run 'copy-js-to-docs))
+  }
+}

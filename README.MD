@@ -24,6 +24,15 @@ npx shadow-cljs release devcards
 cp out/devcards/js/test.js docs/js/test.js
 ```
 
+```powershell
+shadow-cljs release devcards
+Copy-Item .\out\devcards\js\test.js .\docs\js\test.js
+```
+
+```babashka
+bb release-docs
+```
+
 ## LICENSE
 
 Licensed under MIT
