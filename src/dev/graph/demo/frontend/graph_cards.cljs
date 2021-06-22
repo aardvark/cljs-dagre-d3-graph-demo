@@ -59,7 +59,7 @@
                (fn [] (swap! data-atom
                              update-in
                              [:graph-def :nodes]
-                             (fn [oldv args]
+                             (fn [oldv _]
                                (if (= ["C"] (last oldv))
                                  [["A"] ["B"]]
                                  [["A"] ["B"] ["C"]]))))
