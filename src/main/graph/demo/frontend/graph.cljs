@@ -105,15 +105,24 @@
 
 
 (defn dagre-graph-enter
+  "Create dagre d3 graph using given `graph-def` and call render of it in given `div-id`.
+   Return created dagre d3 graph."
   [graph-def div-id]
   (let [g (dagre-graph graph-def)
         svg (-> (.select d3 (str "#" div-id " svg")))
         render (.render dagreD3)]
-    (.call svg render g)))
+    (.call svg render g)
+    g))
 
 (defn dagre-graph-update
-  [graph-def div-id]
-  (dagre-graph-enter graph-def div-id))
+  [g div-id]
+  (let [svg (.select d3 (str "#" div-id " svg"))
+        grp (.graph g)
+        w (.-width grp)
+        h (.-height grp)]
+    (.attr svg "height" h)
+    (.attr svg "widtht" w))
+  )
 
 
 (defn dagre-graph-exit
@@ -124,20 +133,18 @@
 
 (defn dagre-graph-did-update 
   [atom]
-  (dagre-graph-enter (:graph-def @atom) (:div-id @atom))
-  (dagre-graph-update (:graph-def @atom) (:div-id @atom)))
+  (let [g (dagre-graph-enter (:graph-def @atom) (:div-id @atom))]
+    (dagre-graph-update g (:div-id @atom))))
 
 
 (defn dagre-graph-did-mount
   [atom]
   (dagre-graph-did-update atom))
 
-
 (defn graph-did-mount 
   [atom]
   (graph-enter-r atom)
   (dagre-graph-did-mount atom))
-
 
 (defn graph-did-update 
   [atom]

@@ -58,4 +58,13 @@
                                   :edges [["A" "B"]]}})
   {:inspect-data true :history true})
 
-
+(declare big-graph)
+(dc/defcard-rg big-graph
+  "When given graph is bigger than defaults svg h/w values, svg will be scaled to match"
+  (fn [data-atom _]
+    [graph-rg/graph data-atom])
+  (reagent.core/atom {:div-id "big-graph"
+                      :graph-def {:nodes [["A"] ["B"] ["C"] ["D"] ["E"]]
+                                  :edges [["A" "B"] ["A" "C"] ["B" "C"] 
+                                          ["B" "D"] ["C" "E"] ["D" "E"]]}})
+  {:inspect-data true :history true})
