@@ -12,6 +12,7 @@
         "create-react-class": "15.6.3",
         "d3": "5.16.0",
         "dagre-d3": "^0.6.4",
+        "graphlib": "github:dagrejs/graphlib",
         "react": "16.4.1",
         "react-dom": "16.4.1"
     }

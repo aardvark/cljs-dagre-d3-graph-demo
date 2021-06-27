@@ -1,5 +1,6 @@
 (ns graph.demo.frontend.graph
   (:require [clojure.string :as string]
+            ["graphlib" :as graphlib]
             ["d3" :as d3]
             ["dagre-d3" :as dagreD3]))
 
@@ -12,13 +13,13 @@
 
 
 (defn add-nodes! 
-  "Given a dagreD3 `graph` object and list of node definitions in `nodes` 
+  "Given a graphlib `graph` object and list of node definitions in `nodes` 
    add all nodes to the given graph and return mutated graph instance back"
   [graph nodes]
   (loop [h (first nodes)
          r (rest nodes)]
     (let [[id props] h]
-      (.setNode graph id (clj->js (or props {}))))
+        (.setNode graph id (clj->js (or props {:label id :shape "rect"}))))
     (if (empty? r) graph
         (recur (first r) (rest r)))))
 
@@ -37,12 +38,9 @@
 (defn dagre-graph 
   "Given a graph-def entity map create a dagre-d3 graph object"
   [graph-def]
-  (-> dagreD3
-      (aget "graphlib")
-      (aget "Graph")
-      (new)
+  (-> (new (.-Graph graphlib))
       (.setGraph (clj->js {}))
-      (.setDefaultEdgeLabel (clj->js {}))
+      (.setDefaultNodeLabel identity)
 
       (add-nodes! (:nodes graph-def))
       (add-edges! (:edges graph-def))))
@@ -131,9 +129,12 @@
     (.remove svgg)))
 
 
+(comment _ (swap! atom update :g (fn [_ x] x) (.write (.-json graphlib) g)))
+
 (defn dagre-graph-did-update 
   [atom]
-  (let [g (dagre-graph-enter (:graph-def @atom) (:div-id @atom))]
+  (let [g (dagre-graph-enter (:graph-def @atom) (:div-id @atom))
+        ]
     (dagre-graph-update g (:div-id @atom))))
 
 
