@@ -6,7 +6,8 @@
 
  :dependencies
  [[reagent "1.1.0"]
-  [devcards "0.2.7"]]
+  [devcards "0.2.7"]
+  [thi.ng/geom "1.0.0-RC4"]]
 
  :dev-http {3000 "public"
             3001 ["out/devcards" "public"]}

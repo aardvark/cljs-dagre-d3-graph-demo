@@ -78,9 +78,9 @@
   (fn [data-atom _]
     [graph-rg/graph data-atom])
   (reagent.core/atom {:div-id "big-graph"
-                      :graph-def {:nodes [["A"] ["B"] ["C"] ["D"] ["E"]]
-                                  :edges [["A" "B"] ["A" "C"] ["B" "C"] 
-                                          ["B" "D"] ["C" "E"] ["D" "E"]]}})
+                      :graph-def {:nodes [["A"] ["B"] ["C"] ["D"] ["E"] ["F"]]
+                                  :edges [["A" "B"] ["A" "C"] ["B" "C"]
+                                          ["B" "D"] ["C" "E"] ["D" "E"]
+                                          ["D" "F"] ["C" "F"]]}})
   {:inspect-data true :history true})
-
 

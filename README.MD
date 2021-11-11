@@ -1,4 +1,6 @@
-# Dagre D3 ClojureScript Examples
+# ClojureScript Examples
+
+## D3 in Reagent
 
 Examples of Dagre D3 graph build through ClojureScript.
 Note that there is explicit dependency on D3v5.
