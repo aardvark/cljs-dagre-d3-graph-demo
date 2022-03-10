@@ -86,9 +86,9 @@
         lines (linesf x0 dy (* dx (inc (count cols))) -12 5 hline rows)
         columns (linesf y0 dx (* dy (inc (count rows))) (/ dx 4) -2 vline cols)
         
-        dot-lines (map (fn [x] (hline (:y (between x)) 15 120))
+        dot-lines (map (fn [x] (hline (:y (between x)) 15 (* dx (inc (count cols)))))
                        (partition 2 1 (:lines lines)))
-        dot-columns (map (fn [x] (vline (:x (between x)) 15 120))
+        dot-columns (map (fn [x] (vline (:x (between x)) 15 (* dy (inc (count rows)))))
                          (partition 2 1 (:lines columns)))
         
         intersec (g/intersect-line (first (:lines lines)) (first dot-columns))]
@@ -125,11 +125,29 @@
  "line grid fn"
  (dc/reagent
   (adapt/all-as-svg
-    [:svg {:width 400 :height 300}
+    [:svg {:width 400 :height 180}
      (grid (map str (range 13))
            (map str (range 1 7))
-           {:dx 25 :dy 20 :grid false})])))
+           {:dx 25 :dy 20 :grid true})])))
 
+
+(dc/defcard 
+ "note grid"
+ (dc/reagent
+  (adapt/all-as-svg
+   [:svg {:width 400 :height 150}
+    (svg/group {}
+     (svg/group 
+      {:stroke "black"}
+      (hline 10 0 120)
+      (hline 20 0 120)
+      (hline 30 0 120)
+      (hline 40 0 120)
+      (hline 50 0 120)
+                )
+     )
+    
+    ])))
 
 (dc/defcard
  "WIP"
