@@ -6,20 +6,11 @@
   [state-atom {:keys [render mount update]}]
   (reagent/create-class
    {:reagent-render (fn [this]
-                      (comment
-                        (println "reagent-render:" this))
                       (render state-atom))
     :component-did-mount (fn [this]
-                           (comment
-                             (println "component-did-mount:" this)
-                             (println "component-did-mount.state:" state-atom))
                            (mount state-atom))
     :component-did-update (fn [this old-argv old-state snapshot]
-                            (comment
-                              (println "component-did-update:" this)
-                              (println "component-did-update.old-argv:" old-argv)
-                              (println "component-did-update.old-state:" old-state)
-                              (println "component-did-update.snapshot:" snapshot))
+                            (js/console.log this)
                             (update state-atom))}))
 
 (defn graph 
