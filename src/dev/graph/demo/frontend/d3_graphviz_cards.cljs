@@ -1,9 +1,7 @@
 (ns graph.demo.frontend.d3-graphviz-cards
   (:require
    [reagent.core :as r] ; needed for dc/defcard-rg
-   [graph.demo.frontend.reagent :as rr]
    [devcards.core :as dc]
-   ["d3" :as d3]
    ["d3-graphviz" :as d3-graphviz]
    ))
 
@@ -70,7 +68,7 @@
 
       :component-did-update
       (fn [this old-argv]
-        (let [[div-id type graph](rest (r/argv this))]
+        (let [[div-id type graph] (rest (r/argv this))]
           (g div-id type graph)))
 
       :reagent-render
@@ -87,7 +85,7 @@
      [atom-input (:graph @data-atom)]
      [:br]
      [:label "Graph: "]
-     [graph-component (:id @data-atom) "graph" @(:graph @data-atom)]])
+     [graph-component (:id @data-atom) "digraph" @(:graph @data-atom)]])
     
   (r/atom {:id "graph2" :graph (r/atom "a")})
   {:inspect-data true :history true})
